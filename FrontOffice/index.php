@@ -10,21 +10,59 @@ if (!isset($_SESSION['user'])) {
 
 ?>
 
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CaisseShop</title>
-
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CaisseShop</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <nav>
-        <form action="logout.php">
-            <input type="submit" value="Se déconnecter" style="background-color: red;color: white;">
-        </form>
-    </nav>
-    <h1><img src="./logo.png" ></h1>
+ 
+  <div class="topbar">
+    <a href="logout.php" class="logout-link">
+      Se déconnecter
+    </a>
+  </div>
+ 
+  <div class="center">
+ 
+    <!-- Logo -->
+    <div class="logo-wrap">
+      <img src="./img/logo.png" alt="CaisseShop">  
+    </div>
+ 
+    <!-- Menu -->
+    <div class="menu">
+ 
+      <!-- Caisse -->
+      <a href="caisse.php" class="menu-item">
+        <div class="circle circle-blue">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </div>
+        <span class="menu-label">Caisse</span>
+      </a>
+ 
+      <!-- Stock -->
+      <a href="stock.php" class="menu-item">
+        <div class="circle circle-orange">
+          <i class="fa-solid fa-truck"></i>
+        </div>
+        <span class="menu-label">Stock</span>
+      </a>
+ 
+      <!-- Historique -->
+      <a href="hjour.php" class="menu-item">
+        <div class="circle circle-green">
+          <i class="fa-solid fa-file-linesclass"></i>
+        </div>
+        <span class="menu-label">Historique</span>
+      </a>
+ 
+    </div>
+  </div>
+ 
 </body>
 </html>

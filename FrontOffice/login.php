@@ -52,6 +52,7 @@ if (isset($_POST['mail']) && isset($_POST['password'])) {
  
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Connexion - CaisseShop</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -60,7 +61,7 @@ if (isset($_POST['mail']) && isset($_POST['password'])) {
  
     <div class="header">
         <!-- Logo CaisseShop — remplacez par une balise <img> si vous avez le fichier -->
-        <img src="./img/logo.png" alt="CaisseShop" class="logo">
+        <img src="./img/logo.png" alt="CaisseShop">
     </div>
  
     <div class="page-center">
