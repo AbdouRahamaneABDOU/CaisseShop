@@ -16,7 +16,7 @@ if (!isset($_SESSION['user'])) {
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CaisseShop</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./styles/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
@@ -29,15 +29,15 @@ if (!isset($_SESSION['user'])) {
  
   <div class="center">
  
-    <!-- Logo -->
-    <div class="logo-wrap">
+    
+    <div >
       <img src="./img/logo.png" alt="CaisseShop">  
     </div>
  
-    <!-- Menu -->
+    
     <div class="menu">
  
-      <!-- Caisse -->
+      
       <a href="caisse.php" class="menu-item">
         <div class="circle circle-blue">
           <i class="fa-solid fa-cart-shopping"></i>
@@ -45,7 +45,7 @@ if (!isset($_SESSION['user'])) {
         <span class="menu-label">Caisse</span>
       </a>
  
-      <!-- Stock -->
+      
       <a href="stock.php" class="menu-item">
         <div class="circle circle-orange">
           <i class="fa-solid fa-truck"></i>
@@ -53,10 +53,10 @@ if (!isset($_SESSION['user'])) {
         <span class="menu-label">Stock</span>
       </a>
  
-      <!-- Historique -->
+      
       <a href="hjour.php" class="menu-item">
         <div class="circle circle-green">
-          <i class="fa-solid fa-file-linesclass"></i>
+          <b class="fa-solid fa-file-linesclass"></b>
         </div>
         <span class="menu-label">Historique</span>
       </a>

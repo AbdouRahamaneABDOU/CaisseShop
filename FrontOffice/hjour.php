@@ -17,16 +17,13 @@ if (!isset($_SESSION['user'])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Historique des ventes</title>
-  <link rel="stylesheet" href="historique.css">
+  <link rel="stylesheet" href="./styles/historique.css">
 </head>
 <body>
  
   <div class="topbar">
     <a href="index.php" class="back-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="15 18 9 12 15 6"/>
-      </svg>
-      Retour
+      <-- Retour
     </a>
   </div>
  

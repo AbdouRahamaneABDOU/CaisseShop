@@ -175,6 +175,8 @@ body {
 }
  
 .menu {
+    margin: 160px;
+    padding: 60px;
     display: flex;
     gap: 80px;
     align-items: flex-end;

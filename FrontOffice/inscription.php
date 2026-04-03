@@ -33,7 +33,7 @@ try {
     <meta charset="UTF-8">
     <title>Inscription</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./styles/style.css">
 
 </head>
 
