@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CaisseShop – Ajout d'un produit</title>
+  <title>CaisseShop – Modification d'un produit</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="./styles/produit.css">
 
@@ -19,7 +19,7 @@
 <main>
   <!-- ── Formulaire ── -->
   <div class="card form-card">
-    <h1>Ajout d'un produit</h1>
+    <h1>Modification d'un produit</h1>
  
     <div class="field">
       <label for="nom">Nom :</label>

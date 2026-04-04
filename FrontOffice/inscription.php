@@ -1,6 +1,6 @@
 <?php
 try {
-    $mysqlClient = new PDO('mysql:host=localhost;dbname=caisseshop;charset=utf8', 'root', '');
+    $mysqlClient = new PDO('mysql:host=localhost;dbname=caisse_shop;charset=utf8', 'root', '');
 
 
     if ((isset($_GET["nom"]) && empty($_GET["nom"]) === false)
@@ -9,7 +9,7 @@ try {
         && (isset($_GET["mdp"]) && empty($_GET["mdp"]) === false)
     ) {
 
-        $sql_requete = 'INSERT INTO user (Nom, Prenom, Email, MDP)
+        $sql_requete = 'INSERT INTO caissier (Nom, Prenom, Email, MDP)
         VALUES (:nom, :prenom, :email, :mdp)';
         $sql = $mysqlClient->prepare($sql_requete);
         $sql->execute([
@@ -61,13 +61,8 @@ try {
 
         </form>
 
-        <p>Déjà inscrit ?</p>
-
-        <a href="login.php">Se connecter</a>
 
         <br><br>
-
-        <a href="index.php">Retour accueil</a>
 
     </div>
 

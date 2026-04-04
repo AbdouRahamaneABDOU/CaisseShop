@@ -30,7 +30,7 @@
  
   <!-- TOOLBAR -->
   <div class="toolbar">
-    <button class="btn-add">Ajouter un produit</button>
+    <a href="produit.php" class="btn-add">Ajouter un produit</a>
  
     <div class="search-wrapper">
       <input class="search-input" type="text" placeholder="rechercher un produit">
@@ -55,13 +55,13 @@
         <p><strong>Référence :</strong> <span>AZ-897</span></p>
       </div>
       <div class="card-footer">
-        <form action="">
+        <form action="editproduit.php" method="get" >
             <button type="submit" class="btn-detail">Éditer</button>
         </form>
-        <form action="">
+        <form action="detail.php" method="get">
             <button class="btn-detail">Détail</button>
         </form>
-        <form action="">
+        <form action="delete.php" method="get">
             <button class="btn-detail">Supprimer</button>
         </form> 
       </div>

@@ -11,7 +11,7 @@ if (isset($_POST['mail']) && isset($_POST['password'])) {
         // On recupère de l'utilisateur à partir de l'email 
         // SELECT `Email`, `MDP` FROM `user` WHERE 1
 
-        $sqlQuery='SELECT Nom,Prenom,Email,Mdp FROM user WHERE Email = :mail';
+        $sqlQuery='SELECT Nom,Prenom,Email,Mdp FROM caissier WHERE Email = :mail';
         $selectusers=$mysqlClient->prepare($sqlQuery);
         $selectusers->execute([
         'mail' => $_POST['mail']
