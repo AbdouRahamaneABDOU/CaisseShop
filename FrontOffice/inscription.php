@@ -39,30 +39,34 @@ try {
 
 <body>
 
-    <div class="container">
+    <div class="page-center">
+        <div class="card">
 
-        <h1>Inscription</h1>
+            <h1>Inscription</h1>
 
-        <form action="inscription.php" method="GET">
+            <form action="inscription.php" method="GET">
+                <div class="form-group">
+                    <label>Nom</label>
+                    <input type="text" name="nom">
+                </div>
+                <div class="form-group">
+                    <label>Prénom</label>
+                    <input type="text" name="prenom">
+                </div>
 
-            <label>Nom</label>
-            <input type="text" name="nom">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input type="password" name="mdp">
+                </div>
 
-            <label>Prénom</label>
-            <input type="text" name="prenom">
+                <button type="submit" class="btn-submit">S'inscrire</button>
 
-            <label>Email</label>
-            <input type="email" name="email">
-
-            <label>Mot de passe</label>
-            <input type="password" name="mdp">
-
-            <button type="submit">S'inscrire</button>
-
-        </form>
-
-
-        <br><br>
+            </form>
+        </div>
 
     </div>
 

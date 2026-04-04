@@ -1,3 +1,51 @@
+<?php
+session_start();
+require_once(__DIR__ . '/bdd.php');
+
+//Modification d'une offre
+if(isset($_POST['E_id']) && 
+isset($_POST['E_nom']) &&
+isset($_POST['E_description']) &&
+isset($_POST['E_reference']) && 
+isset($_POST['E_prix']) &&
+isset($_POST['E_stock'])){
+  $Mod_Id=$_POST['E_id'];
+  $Modnom=$_POST['E_nom'];
+  $Moddescrip=$_POST['E_description'];
+  $Modref=$_POST['E_reference'];
+  $Modprix=$_POST['E_prix'];
+  $Modstk=$_POST['E_stock'];
+
+  $sqlQuery = "UPDATE `produit` SET `Nom`=:nom,`Description`=:des,`Prix`=:prx,`Reference`=:ref,`Stock`=:stk WHERE Id=:id";
+  $editOffre = $mysqlClient->prepare($sqlQuery);
+  $editOffre->execute([
+    'id'=> $Mod_Id,
+    'nom'=> $Modnom,
+    'des'=>$Moddescrip,
+    'prx'=> $Modprix,
+    'ref'=> $Modref,
+    'stk'=> $Modstk,
+  ]);
+}
+
+
+//supression d'un produit
+if (isset($_POST['supp_produit'])){
+  $supp_produit=$_POST['supp_produit'];
+  
+  $sqlQuery = "DELETE FROM `produit` WHERE Id=:id";
+  $suppressionproduit = $mysqlClient->prepare($sqlQuery);
+  $suppressionproduit->execute([
+    'id'=> $supp_produit
+  ]);
+}
+
+$sqlQuery='SELECT * FROM  produit';
+$selectproduit=$mysqlClient->prepare($sqlQuery);
+$selectproduit->execute();
+$Produits=$selectproduit->fetchAll();
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -20,12 +68,14 @@
       <li><a href="stock.php" class="active">Stock</a></li>
       <li><a href="hjour.php">Historique</a></li>
     </ul>
- 
-    <button class="btn-power" title="Déconnexion">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 3v9M4.22 6.22a9 9 0 1 0 15.56 0"/>
-      </svg>
-    </button>
+
+    <form action="logout.php">
+      <button class="btn-power" title="Déconnexion">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 3v9M4.22 6.22a9 9 0 1 0 15.56 0"/>
+        </svg>
+      </button>
+    </form>
   </nav>
  
   <!-- TOOLBAR -->
@@ -46,132 +96,38 @@
   <!-- PRODUCT GRID -->
   <div class="grid">
  
-    <!-- Card 1 -->
-    <div class="card">
-      <div class="card-info">
-        <p><strong>Nom :</strong> <span>Farine</span></p>
-        <p><strong>Prix :</strong> <span>2€</span></p>
-        <p><strong>Stock :</strong> <span>600</span></p>
-        <p><strong>Référence :</strong> <span>AZ-897</span></p>
+    <?php
+    for ($i=0;$i<count($Produits);$i++) {
+    ?>
+      <div class="card">
+        <div class="card-info">
+          <p><strong>Nom :</strong> <?php echo $Produits[$i]["Nom"] ?></p>
+          <p><strong>Prix :</strong> <?php echo $Produits[$i]["Prix"] ?></p>
+          <p><strong>Stock :</strong> <?php echo $Produits[$i]["Stock"] ?></p>
+          <p><strong>Référence :</strong> <?php echo $Produits[$i]["Reference"] ?></p>
+        </div>
+        <div class="card-footer">
+          <form action="editproduit.php" method="post" >
+              <input type="hidden" name="id_pr_edit" value="<?php echo $Produits[$i]['Id']?>">
+              <input type="hidden" name="N_pr_edit" value="<?php echo $Produits[$i]['Nom']?>">
+              <input type="hidden" name="D_pr_edit" value="<?php echo $Produits[$i]['Description']?>">
+              <input type="hidden" name="P_pr_edit" value="<?php echo $Produits[$i]['Prix']?>">
+              <input type="hidden" name="S_pr_edit" value="<?php echo $Produits[$i]['Stock']?>">
+              <input type="hidden" name="R_pr_edit" value="<?php echo $Produits[$i]['Reference']?>">
+              <button type="submit" class="btn-detail">Éditer</button>
+          </form>
+          <form action="detail.php" method="post">
+              <button class="btn-detail">Détail</button>
+          </form>
+          <form action="stock.php" method="post">
+              <input type="hidden" name="supp_produit" value="<?php echo $Produits[$i]['Id']?>">
+              <button class="btn-detail">Supprimer</button>
+          </form> 
+        </div>
+        
       </div>
-      <div class="card-footer">
-        <form action="editproduit.php" method="get" >
-            <button type="submit" class="btn-detail">Éditer</button>
-        </form>
-        <form action="detail.php" method="get">
-            <button class="btn-detail">Détail</button>
-        </form>
-        <form action="delete.php" method="get">
-            <button class="btn-detail">Supprimer</button>
-        </form> 
-      </div>
-    </div>
- 
-    <!-- Card 2 -->
-    <div class="card">
-      <div class="card-info">
-        <p><strong>Nom :</strong> <span>Sardine</span></p>
-        <p><strong>Prix :</strong> <span>1€</span></p>
-        <p><strong>Stock :</strong> <span>2000</span></p>
-        <p><strong>Référence :</strong> <span>90PL6D</span></p>
-      </div>
-      <div class="card-footer">
-        <form action="">
-            <button type="submit" class="btn-detail">Éditer</button>
-        </form>
-        <form action="">
-            <button class="btn-detail">Détail</button>
-        </form>
-        <form action="">
-            <button class="btn-detail">Supprimer</button>
-        </form> 
-      </div>
-    </div>
- 
-    <!-- Card 3 -->
-    <div class="card">
-      <div class="card-info">
-        <p><strong>Nom :</strong> <span>Sac de riz 20kg</span></p>
-        <p><strong>Prix :</strong> <span>33€</span></p>
-        <p><strong>Stock :</strong> <span>200</span></p>
-        <p><strong>Référence :</strong> <span>GLP86E</span></p>
-      </div>
-      <div class="card-footer">
-        <form action="">
-            <button type="submit" class="btn-detail">Éditer</button>
-        </form>
-        <form action="">
-            <button class="btn-detail">Détail</button>
-        </form>
-        <form action="">
-            <button class="btn-detail">Supprimer</button>
-        </form> 
-      </div>
-    </div>
- 
-    <!-- Card 4 -->
-    <div class="card">
-      <div class="card-info">
-        <p><strong>Nom :</strong> <span>Coca Cola 33cl</span></p>
-        <p><strong>Prix :</strong> <span>1€</span></p>
-        <p><strong>Stock :</strong> <span>800</span></p>
-        <p><strong>Référence :</strong> <span>COL-AL03</span></p>
-      </div>
-      <div class="card-footer">
-        <form action="">
-            <button type="submit" class="btn-detail">Éditer</button>
-        </form>
-        <form action="">
-            <button class="btn-detail">Détail</button>
-        </form>
-        <form action="">
-            <button class="btn-detail">Supprimer</button>
-        </form> 
-      </div>
-    </div>
- 
-    <!-- Card 5 -->
-    <div class="card">
-      <div class="card-info">
-        <p><strong>Nom :</strong> <span>Trésor</span></p>
-        <p><strong>Prix :</strong> <span>3.45€</span></p>
-        <p><strong>Stock :</strong> <span>90</span></p>
-        <p><strong>Référence :</strong> <span>TR123OP</span></p>
-      </div>
-      <div class="card-footer">
-        <form action="">
-            <button type="submit" class="btn-detail">Éditer</button>
-        </form>
-        <form action="">
-            <button class="btn-detail">Détail</button>
-        </form>
-        <form action="">
-            <button class="btn-detail">Supprimer</button>
-        </form> 
-      </div>
-    </div>
- 
-    <!-- Card 6 -->
-    <div class="card">
-      <div class="card-info">
-        <p><strong>Nom :</strong> <span>Sucre</span></p>
-        <p><strong>Prix :</strong> <span>1.50€</span></p>
-        <p><strong>Stock :</strong> <span>1540</span></p>
-        <p><strong>Référence :</strong> <span>75fr85C</span></p>
-      </div>
-      <div class="card-footer">
-        <form action="">
-            <button type="submit" class="btn-detail">Éditer</button>
-        </form>
-        <form action="">
-            <button class="btn-detail">Détail</button>
-        </form>
-        <form action="">
-            <button class="btn-detail">Supprimer</button>
-        </form> 
-      </div>
-    </div>
- 
+      <?php
+        }?>
   </div>
  
 </body>

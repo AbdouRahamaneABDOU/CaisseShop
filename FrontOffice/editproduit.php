@@ -1,3 +1,14 @@
+<?php
+session_start();
+require_once(__DIR__ . '/bdd.php');
+
+$sqlQuery='SELECT * FROM  produit';
+$selectproduit=$mysqlClient->prepare($sqlQuery);
+$selectproduit->execute();
+$Produits=$selectproduit->fetchAll();
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -19,41 +30,43 @@
 <main>
   <!-- ── Formulaire ── -->
   <div class="card form-card">
+    <form action="stock.php">
     <h1>Modification d'un produit</h1>
- 
+    <input type="hidden" name="E_id" value="<?php echo $_POST['id_pr_edit'] ?>"/>
     <div class="field">
       <label for="nom">Nom :</label>
-      <input type="text" id="nom" placeholder="Nom du produit" autocomplete="off"/>
+      <input type="text" name="E_nom" value="<?php echo $_POST['N_pr_edit'] ?>"/>
     </div>
  
     <div class="field">
       <label for="description">Description :</label>
-      <textarea id="description" placeholder="Description du produit…"></textarea>
+      <textarea name="E_description" placeholder="Description du produit…"><?php echo $_POST['D_pr_edit'] ?></textarea>
     </div>
  
     <div class="field">
       <label for="reference">Référence :</label>
       <div class="ref-wrapper">
-        <input type="text" id="reference" placeholder="Ex : REF-123456" autocomplete="off"/>
+        <input type="text" name="E_reference" value="<?php echo $_POST['R_pr_edit'] ?>"/>
         <span class="ref-icon">⌗</span>
       </div>
     </div>
  
     <div class="field">
       <label for="prix">Prix :</label>
-      <input type="number" id="prix" placeholder="0.00" min="0" step="0.01"/>
+      <input type="number" name="E_prix" value="<?php echo $_POST['P_pr_edit'] ?>" />
     </div>
  
     <div class="field">
       <label for="stock">Stock :</label>
-      <input type="number" id="stock" placeholder="0" min="0" step="1"/>
+      <input type="number" name="E_stock" value="<?php echo $_POST['S_pr_edit'] ?>"/>
     </div>
  
     <div class="btn-row">
-      <button class="btn btn-add" >Ajouter</button>
-      <button class="btn btn-cancel">Annuler</button>
+      <button type="submit" class="btn btn-add" >Ajouter</button>
+      <a href="stock.php" class="btn btn-cancel">Annuler</a>
     </div>
   </div>
+  <
  
   <!-- ── Code-barres ── -->
   <div class="card bc-card">
