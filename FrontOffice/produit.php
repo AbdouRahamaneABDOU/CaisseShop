@@ -41,8 +41,8 @@ isset($_POST['stock']) && !empty($_POST['stock'])){
 <body>
  
 <header>
-  <div>
-    <img src="./img/logo.png" class="logo" alt="CaisseShop">
+  <div class="logo">
+    <a href="index.php"><img src="./img/logo.png" alt="CaisseShop"></a>
   </div>
 </header>
  

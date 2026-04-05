@@ -22,51 +22,53 @@ $Produits=$selectproduit->fetchAll();
 <body>
  
 <header>
-  <div>
-    <img src="./img/logo.png" class="logo" alt="CaisseShop">
+  <div class="logo">
+    <a href="index.php"><img src="./img/logo.png" alt="CaisseShop"></a>
   </div>
 </header>
  
 <main>
   <!-- ── Formulaire ── -->
   <div class="card form-card">
-    <form action="stock.php">
+    
     <h1>Modification d'un produit</h1>
-    <input type="hidden" name="E_id" value="<?php echo $_POST['id_pr_edit'] ?>"/>
-    <div class="field">
-      <label for="nom">Nom :</label>
-      <input type="text" name="E_nom" value="<?php echo $_POST['N_pr_edit'] ?>"/>
-    </div>
- 
-    <div class="field">
-      <label for="description">Description :</label>
-      <textarea name="E_description" placeholder="Description du produit…"><?php echo $_POST['D_pr_edit'] ?></textarea>
-    </div>
- 
-    <div class="field">
-      <label for="reference">Référence :</label>
-      <div class="ref-wrapper">
-        <input type="text" name="E_reference" value="<?php echo $_POST['R_pr_edit'] ?>"/>
-        <span class="ref-icon">⌗</span>
+    <form action="stock.php" method="post">
+      <input type="hidden" name="E_id" value="<?php echo $_POST['id_pr_edit'] ?>"/>
+      <div class="field">
+        <label for="nom">Nom :</label>
+        <input type="text" name="E_nom" value="<?php echo $_POST['N_pr_edit'] ?>"/>
       </div>
-    </div>
- 
-    <div class="field">
-      <label for="prix">Prix :</label>
-      <input type="number" name="E_prix" value="<?php echo $_POST['P_pr_edit'] ?>" />
-    </div>
- 
-    <div class="field">
-      <label for="stock">Stock :</label>
-      <input type="number" name="E_stock" value="<?php echo $_POST['S_pr_edit'] ?>"/>
-    </div>
- 
-    <div class="btn-row">
-      <button type="submit" class="btn btn-add" >Ajouter</button>
-      <a href="stock.php" class="btn btn-cancel">Annuler</a>
-    </div>
+  
+      <div class="field">
+        <label for="description">Description :</label>
+        <textarea name="E_description" placeholder="Description du produit…"><?php echo $_POST['D_pr_edit'] ?></textarea>
+      </div>
+  
+      <div class="field">
+        <label for="reference">Référence :</label>
+        <div class="ref-wrapper">
+          <input type="text" name="E_reference" value="<?php echo $_POST['R_pr_edit'] ?>"/>
+          <span class="ref-icon">⌗</span>
+        </div>
+      </div>
+  
+      <div class="field">
+        <label for="prix">Prix :</label>
+        <input type="number" name="E_prix" value="<?php echo $_POST['P_pr_edit'] ?>" />
+      </div>
+  
+      <div class="field">
+        <label for="stock">Stock :</label>
+        <input type="number" name="E_stock" value="<?php echo $_POST['S_pr_edit'] ?>"/>
+      </div>
+  
+      <div class="btn-row">
+        <button type="submit" class="btn btn-add" >Ajouter</button>
+        <a href="stock.php" class="btn btn-cancel">Annuler</a>
+      </div>
+    </form>
   </div>
-  <
+  
  
   <!-- ── Code-barres ── -->
   <div class="card bc-card">

@@ -53,6 +53,7 @@ $Produits=$selectproduit->fetchAll();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CaisseShop – Stock</title>
   <link rel="stylesheet" href="./styles/stock.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 </head>
 <body>
@@ -60,20 +61,18 @@ $Produits=$selectproduit->fetchAll();
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="logo">
-      <img src="./img/logo.png" alt="CaisseShop">
+      <a href="index.php"><img src="./img/logo.png" alt="CaisseShop"></a>
     </div>
  
     <ul class="nav-links">
-      <li><a href="caisse.php">Caisse</a></li>
-      <li><a href="stock.php" class="active">Stock</a></li>
-      <li><a href="hjour.php">Historique</a></li>
+      <li><a href="caisse.php">CAISSE</a></li>
+      <li><a href="stock.php" class="active">STOCK</a></li>
+      <li><a href="hjour.php">HISTORIQUE</a></li>
     </ul>
 
-    <form action="logout.php">
+    <form action="logout.php" method="post">
       <button class="btn-power" title="Déconnexion">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 3v9M4.22 6.22a9 9 0 1 0 15.56 0"/>
-        </svg>
+        <i class="fa-solid fa-power-off"></i>
       </button>
     </form>
   </nav>
@@ -85,15 +84,11 @@ $Produits=$selectproduit->fetchAll();
     <div class="search-wrapper">
       <input class="search-input" type="text" placeholder="rechercher un produit">
       <button class="search-btn" title="Rechercher">
-        <!-- paper-plane icon -->
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/>
-        </svg>
+        <i class="fa-solid fa-paper-plane"></i>
       </button>
     </div>
   </div>
  
-  <!-- PRODUCT GRID -->
   <div class="grid">
  
     <?php
@@ -102,7 +97,7 @@ $Produits=$selectproduit->fetchAll();
       <div class="card">
         <div class="card-info">
           <p><strong>Nom :</strong> <?php echo $Produits[$i]["Nom"] ?></p>
-          <p><strong>Prix :</strong> <?php echo $Produits[$i]["Prix"] ?></p>
+          <p><strong>Prix :</strong> <?php echo $Produits[$i]["Prix"] ?> €</p>
           <p><strong>Stock :</strong> <?php echo $Produits[$i]["Stock"] ?></p>
           <p><strong>Référence :</strong> <?php echo $Produits[$i]["Reference"] ?></p>
         </div>
@@ -114,20 +109,24 @@ $Produits=$selectproduit->fetchAll();
               <input type="hidden" name="P_pr_edit" value="<?php echo $Produits[$i]['Prix']?>">
               <input type="hidden" name="S_pr_edit" value="<?php echo $Produits[$i]['Stock']?>">
               <input type="hidden" name="R_pr_edit" value="<?php echo $Produits[$i]['Reference']?>">
-              <button type="submit" class="btn-detail">Éditer</button>
+              <button type="submit" class="btn-detail">
+                <i class="fa-solid fa-pen"></i>
+              </button>
           </form>
           <form action="detail.php" method="post">
               <button class="btn-detail">Détail</button>
           </form>
           <form action="stock.php" method="post">
               <input type="hidden" name="supp_produit" value="<?php echo $Produits[$i]['Id']?>">
-              <button class="btn-detail">Supprimer</button>
+              <button class="btn-detail">
+                <i class="fa-solid fa-trash"></i> 
+              </button>
           </form> 
         </div>
         
       </div>
-      <?php
-        }?>
+    <?php
+    }?>
   </div>
  
 </body>
