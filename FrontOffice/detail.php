@@ -2,11 +2,6 @@
 session_start();
 require_once(__DIR__ . '/bdd.php');
 
-/*
-$sqlQuery='SELECT * FROM  produit';
-$selectproduit=$mysqlClient->prepare($sqlQuery);
-$selectproduit->execute();
-$Produits=$selectproduit->fetchAll();*/
 
 ?>
 

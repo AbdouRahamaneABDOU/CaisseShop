@@ -52,25 +52,7 @@ $Produits=$selectproduit->fetchAll();
     </div>
  
     <div class="scroll-zone">
-      <div class="grid">
- 
-        <?php
-        for ($i=0;$i<count($Produits);$i++) {
-        ?>
-            <div class="card">
-            <div class="card-info">
-                <p><strong>Nom :</strong> <?php echo $Produits[$i]["Nom"] ?></p>
-                <p><strong>Prix :</strong> <?php echo $Produits[$i]["Prix"] ?> €</p>
-                <p><strong>Référence :</strong> <?php echo $Produits[$i]["Reference"] ?></p>
-            </div>
-            <div class="card-footer">
-                <button class="btn-detail">
-                    <i class="fa-solid fa-cart-shopping"></i> Ajouter au panier
-                </button>
-            </div>
-            </div>
-        <?php 
-        } ?>
+      <div class="grid" id="productGrid">    
  
       </div>
     </div>
@@ -80,36 +62,14 @@ $Produits=$selectproduit->fetchAll();
     <div class="ticket-title">Ticket</div>
  
     <div class="ticket-items">
-      <div class="ticket-item">
-        <span class="ticket-item-name">Sac de riz 20kg</span>
-        <span class="ticket-item-price">33€</span>
-        <button class="ticket-item-delete">X</button>
-      </div>
-      <div class="ticket-item">
-        <span class="ticket-item-name">Céréales Trésor</span>
-        <span class="ticket-item-price">3.45 €</span>
-        <button class="ticket-item-delete">X</button>
-      </div>
-      <div class="ticket-item">
-        <span class="ticket-item-name">Sucre 1kg</span>
-        <span class="ticket-item-price">1.50€</span>
-        <button class="ticket-item-delete">X</button>
-      </div>
-      <div class="ticket-item">
-        <span class="ticket-item-name">Farine 1kg</span>
-        <span class="ticket-item-price">2€</span>
-        <button class="ticket-item-delete">X</button>
-      </div>
-      <div class="ticket-item">
-        <span class="ticket-item-name">Canette de Coca Cola 33cl</span>
-        <span class="ticket-item-price">3€</span>
-        <button class="ticket-item-delete">X</button>
+      <div class="ticket-item" id="ticketList">
+        <p class="ticket-item-name">Aucun article</p>
       </div>
     </div>
  
     <div class="ticket-total">
       <span>Total</span>
-      <span class="ticket-total-amount">42.95€</span>
+      <span class="ticket-total-amount" id="ticketTotal">0.00 €</span>
     </div>
  
     <button class="btn-facture">Facture</button>
@@ -118,4 +78,116 @@ $Produits=$selectproduit->fetchAll();
 </div>
  
 </body>
+
+<script>
+    const produits = <?php echo json_encode($Produits); ?>;
+
+    let caisse = [];
+
+    function afficherCaisse() {
+        const ticketList = document.getElementById("ticketList");
+        ticketList.innerHTML = '';
+        let total = 0;
+        for (let index = 0; index < caisse.length; index++) {
+
+            total += (caisse[index].Prix * caisse[index].Quantite);
+
+            ticketList.innerHTML += `
+            <div class="ticket-item">
+            
+              <strong class="ticket-item-name">${caisse[index].Nom}</strong><br>
+              <small class="ticket-item-price">${caisse[index].Prix} € / unité</small>
+
+            
+              <button type="button" onclick="diminuerQuantite(${caisse[index].id})">-</button>
+              <span>${caisse[index].Quantite}</span>
+              <button type="button" onclick="augmenterQuantite(${caisse[index].id})">+</button>
+              <button type="button" class="btn-remove" onclick="supprimerProduit(${caisse[index].id})">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+
+
+            <input type="hidden" name="produits[${index}][id]" value="${caisse[index].id}">
+            <input type="hidden" name="produits[${index}][quantite]" value="${caisse[index].Quantite}">
+            
+          </div>
+        `;
+        }
+
+        const totalCaisse = document.getElementById("ticketTotal");
+        totalCaisse.innerHTML = Math.trunc(total * 100) / 100 + " €";
+
+    }
+
+    function ajouterProduitDansCaisse(id) {
+        let newProduct = produits.find(p => p.id == id);
+        let productExist = caisse.find(p => p.id == id);
+
+        if (productExist == null)
+            caisse.push({
+                id: newProduct.id,
+                Nom: newProduct.Nom,
+                Prix: newProduct.Prix,
+                Quantite: 1
+            })
+        else {
+            productExist.Quantite++;
+        }
+        afficherCaisse();
+    }
+
+    function augmenterQuantite(id) {
+        let produitDansCaisse = caisse.find(p => p.id == id);
+
+        produitDansCaisse.Quantite = produitDansCaisse.Quantite + 1;
+
+
+        afficherCaisse();
+
+    }
+
+
+    function supprimerProduit(id) {
+        caisse = caisse.filter(p => p.id != id);
+        afficherCaisse();
+
+    }
+
+
+    function diminuerQuantite(id) {
+        let produitDansCaisse = caisse.find(p => p.id == id);
+
+        produitDansCaisse.Quantite = produitDansCaisse.Quantite - 1;
+        if (produitDansCaisse.Quantite <= 0) {
+            caisse = caisse.filter(p => p.id != id);
+        }
+
+        afficherCaisse();
+    }
+
+    function afficherProduits() {
+        let productList = document.getElementById("productGrid");
+        productList.innerHTML = "";
+
+        for (let index = 0; index < produits.length; index++) {
+            productList.innerHTML = productList.innerHTML + `
+             <div class="card" >
+                <div class="card-info" >
+                    <p><strong>Nom :</strong> ${produits[index].Nom}</p>
+                    <p><strong>Prix :</strong>${Number(produits[index].Prix)} €</p>
+                    <p><strong>Stock :</strong>${Number(produits[index].Stock)}</p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn-detail" type="button" onclick="ajouterProduitDansCaisse(${produits[index].id})" >
+                        <i class="fa-solid fa-cart-shopping"></i> Ajouter au panier
+                    </button>
+                </div>
+            </div>
+        `;
+        }
+    }
+
+
+    afficherProduits();
+</script>
 </html>
