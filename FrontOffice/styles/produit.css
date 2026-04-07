@@ -185,6 +185,121 @@ textarea { resize: vertical; min-height: 90px; }
 }
 .bc-error.visible { display: block; }
 
+/* ── Bouton retour ── */
+.btn-retour {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    margin: 24px 0 20px 24px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    background: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1e293b;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-retour:hover { background: #f1f5f9; }
+
+/* ── Carte détail ── */
+.detail-card {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+    max-width: 860px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Image produit */
+.detail-image {
+    width: 320px;
+    min-width: 260px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail-image img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+/* Infos produit */
+.detail-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.detail-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-field strong {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #1e293b;
+}
+
+.detail-field span {
+    font-size: 0.95rem;
+    color: #475569;
+}
+
+/* Barcode */
+.barcode-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.barcode-img {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.barcode-img img {
+    height: 56px;
+    width: auto;
+}
+
+.bc-ref-label {
+    font-family: monospace;
+    font-size: 0.78rem;
+    color: #475569;
+    background: #f1f5f9;
+    padding: 4px 12px;
+    border-radius: 6px;
+    letter-spacing: 0.06em;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .detail-card {
+    flex-direction: column;
+    gap: 24px;
+    }
+    .detail-image {
+    width: 100%;
+    }
+    main {
+    padding: 24px 16px;
+    }
+}
+
 /* ── Responsive ── */
 @media (max-width: 820px) {
     main { flex-direction: column; align-items: center; }

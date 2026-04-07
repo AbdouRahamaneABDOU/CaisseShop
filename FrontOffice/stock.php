@@ -114,6 +114,12 @@ $Produits=$selectproduit->fetchAll();
               </button>
           </form>
           <form action="detail.php" method="post">
+              <input type="hidden" name="id_pr" value="<?php echo $Produits[$i]['Id']?>">
+              <input type="hidden" name="N_pr" value="<?php echo $Produits[$i]['Nom']?>">
+              <input type="hidden" name="D_pr" value="<?php echo $Produits[$i]['Description']?>">
+              <input type="hidden" name="P_pr" value="<?php echo $Produits[$i]['Prix']?>">
+              <input type="hidden" name="S_pr" value="<?php echo $Produits[$i]['Stock']?>">
+              <input type="hidden" name="R_pr" value="<?php echo $Produits[$i]['Reference']?>">
               <button class="btn-detail">Détail</button>
           </form>
           <form action="stock.php" method="post">
