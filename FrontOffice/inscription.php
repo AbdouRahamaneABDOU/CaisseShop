@@ -3,25 +3,25 @@ try {
     $mysqlClient = new PDO('mysql:host=localhost;dbname=caisse_shop;charset=utf8', 'root', '');
 
 
-    if ((isset($_GET["nom"]) && empty($_GET["nom"]) === false)
-        && (isset($_GET["prenom"]) && empty($_GET["prenom"]) === false)
-        && (isset($_GET["email"]) && empty($_GET["email"]) === false)
-        && (isset($_GET["mdp"]) && empty($_GET["mdp"]) === false)
+    if ((isset($_POST["nom"]) && empty($_POST["nom"]) === false)
+        && (isset($_POST["prenom"]) && empty($_POST["prenom"]) === false)
+        && (isset($_POST["email"]) && empty($_POST["email"]) === false)
+        && (isset($_POST["mdp"]) && empty($_POST["mdp"]) === false)
     ) {
 
         $sql_requete = 'INSERT INTO caissier (Nom, Prenom, Email, MDP)
         VALUES (:nom, :prenom, :email, :mdp)';
         $sql = $mysqlClient->prepare($sql_requete);
         $sql->execute([
-            'nom' => $_GET["nom"],
-            'prenom' => $_GET["prenom"],
-            'email' => $_GET["email"],
-            'mdp' => password_hash($_GET["mdp"], PASSWORD_DEFAULT),
+            'nom' => $_POST["nom"],
+            'prenom' => $_POST["prenom"],
+            'email' => $_POST["email"],
+            'mdp' => password_hash($_POST["mdp"], PASSWORD_DEFAULT),
         ]);
     }
 } catch (Exception $e) {
     // En cas d'erreur, on affiche un message et on arrête tout
-    die('Erreur : ' . $e->getMessage());
+    die('Erreur : ' . $e->POSTMessage());
 }
 ?>
 
@@ -44,7 +44,7 @@ try {
 
             <h1>Inscription</h1>
 
-            <form action="inscription.php" method="GET">
+            <form action="inscription.php" method="POST">
                 <div class="form-group">
                     <label>Nom</label>
                     <input type="text" name="nom">

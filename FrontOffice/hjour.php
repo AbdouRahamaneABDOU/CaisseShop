@@ -59,7 +59,11 @@ if (!isset($_SESSION['user'])) {
               <td><span class="time-badge">13:11</span></td>
               <td><span class="qty">5</span></td>
               <td><span class="total">42,95 €</span></td>
-              <td><button class="btn-voir">Voir</button></td>
+              <td>
+                <form action="apercu.php" method="post">
+                  <button type="submit" class="btn-voir">Voir</button>
+                <form>
+              </td>
             </tr>
             <tr>
               <td>
@@ -70,7 +74,11 @@ if (!isset($_SESSION['user'])) {
               <td><span class="time-badge">14:25</span></td>
               <td><span class="qty">9</span></td>
               <td><span class="total">79,90 €</span></td>
-              <td><button class="btn-voir">Voir</button></td>
+              <td>
+                <form action="apercu.php" method="post">
+                  <button type="submit" class="btn-voir">Voir</button>
+                <form>
+              </td>
             </tr>
             <tr>
               <td>
@@ -81,7 +89,11 @@ if (!isset($_SESSION['user'])) {
               <td><span class="time-badge">19:02</span></td>
               <td><span class="qty">4</span></td>
               <td><span class="total">23,25 €</span></td>
-              <td><button class="btn-voir">Voir</button></td>
+              <td>
+                <form action="apercu.php" method="post">
+                  <button type="submit" class="btn-voir">Voir</button>
+                <form>
+              </td>
             </tr>
           </tbody>
         </table>
