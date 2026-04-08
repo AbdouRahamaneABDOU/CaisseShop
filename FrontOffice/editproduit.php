@@ -17,6 +17,7 @@ $Produits=$selectproduit->fetchAll();
   <title>CaisseShop – Modification d'un produit</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="./styles/produit.css">
+  <script src="https://cdn.jsdelivr.net/gh/dymosoftware/dymo-connect-framework/dymo.connect.framework.js"></script>
 
 </head>
 <body>
@@ -28,7 +29,7 @@ $Produits=$selectproduit->fetchAll();
 </header>
  
 <main>
-  <!-- ── Formulaire ── -->
+  
   <div class="card form-card">
     
     <h1>Modification d'un produit</h1>
