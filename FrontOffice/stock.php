@@ -1,5 +1,12 @@
 <?php
 session_start();
+// Verifier si la session existe
+
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit;
+}
+
 require_once(__DIR__ . '/bdd.php');
 
 //Modification d'une offre

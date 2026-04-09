@@ -1,6 +1,38 @@
 <?php
 session_start();
+// Verifier si la session existe
+
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit;
+}
+
 require_once(__DIR__ . '/bdd.php');
+
+//Jointure  
+$sqlQuery = 
+'SELECT ve.Id,
+ve.Date,
+ve.Heure,
+ve.Total,
+ca.Prenom
+FROM ventes ve
+JOIN caissier ca on ca.Id = ve.Id_Caissier;';
+$SelectVentes=$mysqlClient->prepare($sqlQuery);
+$SelectVentes->execute();
+$Ventes=$SelectVentes->fetchAll();
+
+if(isset($_POST['total']) && !empty($_POST['total'])){
+  $total=$_POST['total'];
+
+  $sqlQuery = "INSERT INTO `ventes`(`Nom`, `Description`, `Prix`, `Reference`, `Stock` ) 
+  VALUES (:nom,:descr,:prix,:ref,:stk)";
+  $insertproduit = $mysqlClient->prepare($sqlQuery);
+  $insertproduit->execute([
+    'nom'=>$nom,
+  ]);
+}
+
 
 
 $sqlQuery='SELECT * FROM  produit';
@@ -45,7 +77,7 @@ $Produits=$selectproduit->fetchAll();
     <div class="toolbar">
       <div class="search-wrapper">
         <input class="search-input" type="text" placeholder="rechercher un produit">
-        <button class="search-btn" title="Rechercher">
+        <button type="submit" class="search-btn" title="Rechercher">
             <i class="fa-solid fa-paper-plane"></i>
         </button>
       </div>
@@ -60,19 +92,19 @@ $Produits=$selectproduit->fetchAll();
 
   <div class="ticket-panel">
     <div class="ticket-title">Ticket</div>
- 
-    <div class="ticket-items">
-      <div class="ticket-item" id="ticketList">
+
+    <form action="" method="post">
+      <div class="ticket-items" id="ticketList">
         <p class="ticket-item-name">Aucun article</p>
       </div>
-    </div>
- 
-    <div class="ticket-total">
-      <span>Total</span>
-      <span class="ticket-total-amount" id="ticketTotal">0.00 €</span>
-    </div>
- 
-    <button class="btn-facture">Facture</button>
+  
+      <div class="ticket-total">
+        <span>Total</span>
+        <span class="ticket-total-amount" id="ticketTotal" name="total">0.00 €</span>
+      </div>
+  
+      <button type="submit" class="btn-facture">Confirmer</button>
+    </form>
   </div>
 
 </div>
@@ -94,20 +126,21 @@ $Produits=$selectproduit->fetchAll();
 
             ticketList.innerHTML += `
             <div class="ticket-item">
+
             
               <strong class="ticket-item-name">${caisse[index].Nom}</strong><br>
               <small class="ticket-item-price">${caisse[index].Prix} € / unité</small>
 
             
-              <button type="button" onclick="diminuerQuantite(${caisse[index].id})">-</button>
+              <button type="button" onclick="diminuerQuantite(${caisse[index].Id})">-</button>
               <span>${caisse[index].Quantite}</span>
-              <button type="button" onclick="augmenterQuantite(${caisse[index].id})">+</button>
-              <button type="button" class="btn-remove" onclick="supprimerProduit(${caisse[index].id})">
+              <button type="button" onclick="augmenterQuantite(${caisse[index].Id})">+</button>
+              <button type="button" class="btn-remove" onclick="supprimerProduit(${caisse[index].Id})">
                 <i class="fa-solid fa-trash"></i>
               </button>
 
 
-            <input type="hidden" name="produits[${index}][id]" value="${caisse[index].id}">
+            <input type="hidden" name="produits[${index}][Id]" value="${caisse[index].Id}">
             <input type="hidden" name="produits[${index}][quantite]" value="${caisse[index].Quantite}">
             
           </div>
@@ -119,13 +152,13 @@ $Produits=$selectproduit->fetchAll();
 
     }
 
-    function ajouterProduitDansCaisse(id) {
-        let newProduct = produits.find(p => p.id == id);
-        let productExist = caisse.find(p => p.id == id);
+    function ajouterProduitDansCaisse(Id) {
+        let newProduct = produits.find(p => p.Id == Id);
+        let productExist = caisse.find(p => p.Id == Id);
 
         if (productExist == null)
             caisse.push({
-                id: newProduct.id,
+                Id: newProduct.Id,
                 Nom: newProduct.Nom,
                 Prix: newProduct.Prix,
                 Quantite: 1
@@ -136,8 +169,8 @@ $Produits=$selectproduit->fetchAll();
         afficherCaisse();
     }
 
-    function augmenterQuantite(id) {
-        let produitDansCaisse = caisse.find(p => p.id == id);
+    function augmenterQuantite(Id) {
+        let produitDansCaisse = caisse.find(p => p.Id == Id);
 
         produitDansCaisse.Quantite = produitDansCaisse.Quantite + 1;
 
@@ -147,19 +180,19 @@ $Produits=$selectproduit->fetchAll();
     }
 
 
-    function supprimerProduit(id) {
-        caisse = caisse.filter(p => p.id != id);
+    function supprimerProduit(Id) {
+        caisse = caisse.filter(p => p.Id != Id);
         afficherCaisse();
 
     }
 
 
-    function diminuerQuantite(id) {
-        let produitDansCaisse = caisse.find(p => p.id == id);
+    function diminuerQuantite(Id) {
+        let produitDansCaisse = caisse.find(p => p.Id == Id);
 
         produitDansCaisse.Quantite = produitDansCaisse.Quantite - 1;
         if (produitDansCaisse.Quantite <= 0) {
-            caisse = caisse.filter(p => p.id != id);
+            caisse = caisse.filter(p => p.Id != Id);
         }
 
         afficherCaisse();
@@ -175,10 +208,11 @@ $Produits=$selectproduit->fetchAll();
                 <div class="card-info" >
                     <p><strong>Nom :</strong> ${produits[index].Nom}</p>
                     <p><strong>Prix :</strong>${Number(produits[index].Prix)} €</p>
+                    <p><strong>Réference :</strong>${(produits[index].Reference)}</p>
                     <p><strong>Stock :</strong>${Number(produits[index].Stock)}</p>
                 </div>
                 <div class="card-footer">
-                    <button class="btn-detail" type="button" onclick="ajouterProduitDansCaisse(${produits[index].id})" >
+                    <button class="btn-detail" type="button" onclick="ajouterProduitDansCaisse(${produits[index].Id})" >
                         <i class="fa-solid fa-cart-shopping"></i> Ajouter au panier
                     </button>
                 </div>

@@ -7,6 +7,20 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
+require_once(__DIR__ . '/bdd.php');
+
+//Jointure  
+$sqlQuery = 
+'SELECT ve.Id,
+ve.Date,
+ve.Heure,
+ve.Total,
+ca.Prenom
+FROM ventes ve
+JOIN caissier ca on ca.Id = ve.Id_Caissier;';
+$SelectVentes=$mysqlClient->prepare($sqlQuery);
+$SelectVentes->execute();
+$Ventes=$SelectVentes->fetchAll();
 
 ?>
 
@@ -53,7 +67,7 @@ if (!isset($_SESSION['user'])) {
             <tr>
               <td>
                 <div class="user-cell">
-                  User2
+                  <?php echo $Ventes[1]['Prenom'] ?>
                 </div>
               </td>
               <td><span class="time-badge">13:11</span></td>
