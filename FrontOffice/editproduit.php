@@ -2,6 +2,25 @@
 session_start();
 require_once(__DIR__ . '/bdd.php');
 
+
+if(isset($_POST['id_pr_edit']) && 
+isset($_POST['N_pr_edit']) &&
+isset($_POST['D_pr_edit']) &&
+isset($_POST['R_pr_edit']) && 
+isset($_POST['P_pr_edit']) &&
+isset($_POST['S_pr_edit'])){
+  $Mod_Id=$_POST['id_pr_edit'];
+  $Modnom=$_POST['N_pr_edit'];
+  $Moddescrip=$_POST['D_pr_edit'];
+  $Modref=$_POST['R_pr_edit'];
+  $Modprix=$_POST['P_pr_edit'];
+  $Modstk=$_POST['S_pr_edit'];
+}else{
+  header('Location: stock.php');
+}
+
+
+
 $sqlQuery='SELECT * FROM  produit';
 $selectproduit=$mysqlClient->prepare($sqlQuery);
 $selectproduit->execute();
@@ -34,32 +53,32 @@ $Produits=$selectproduit->fetchAll();
     
     <h1>Modification d'un produit</h1>
     <form action="stock.php" method="post">
-      <input type="hidden" name="E_id" value="<?php echo $_POST['id_pr_edit'] ?>"/>
+      <input type="hidden" name="E_id" value="<?php echo $Mod_Id ?>"/>
       <div class="field">
         <label for="nom">Nom :</label>
-        <input type="text" name="E_nom" id="productName" value="<?php echo $_POST['N_pr_edit'] ?>"/>
+        <input type="text" name="E_nom" id="productName" value="<?php echo $Modnom ?>"/>
       </div>
   
       <div class="field">
         <label for="description">Description :</label>
-        <textarea name="E_description" placeholder="Description du produit…"><?php echo $_POST['D_pr_edit'] ?></textarea>
+        <textarea name="E_description" placeholder="Description du produit…"><?php echo $Moddescrip ?></textarea>
       </div>
   
       <div class="field">
         <label for="reference">Référence :</label>
         <div class="ref-wrapper">
-          <input type="text" name="E_reference" id="barcodeValue" value="<?php echo $_POST['R_pr_edit'] ?>"/>
+          <input type="text" name="E_reference" id="barcodeValue" value="<?php echo $Modref ?>"/>
         </div>
       </div>
   
       <div class="field">
         <label for="prix">Prix :</label>
-        <input type="number" name="E_prix" id="priceValue" value="<?php echo $_POST['P_pr_edit'] ?>" />
+        <input type="number" name="E_prix" id="priceValue" value="<?php echo $Modprix ?>" />
       </div>
   
       <div class="field">
         <label for="stock">Stock :</label>
-        <input type="number" name="E_stock" value="<?php echo $_POST['S_pr_edit'] ?>"/>
+        <input type="number" name="E_stock" value="<?php echo $Modstk ?>"/>
       </div>
   
       <div class="btn-row">
