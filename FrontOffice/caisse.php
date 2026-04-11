@@ -9,29 +9,47 @@ if (!isset($_SESSION['user'])) {
 
 require_once(__DIR__ . '/bdd.php');
 
-//Jointure  
-$sqlQuery = 
-'SELECT ve.Id,
-ve.Date,
-ve.Heure,
-ve.Total,
-ca.Prenom
-FROM ventes ve
-JOIN caissier ca on ca.Id = ve.Id_Caissier;';
-$SelectVentes=$mysqlClient->prepare($sqlQuery);
-$SelectVentes->execute();
-$Ventes=$SelectVentes->fetchAll();
-
-if(isset($_POST['total']) && !empty($_POST['total'])){
+if(isset($_POST['produits']) && !empty($_POST['produits'])&&
+isset($_POST['total']) && !empty($_POST['total'])){
+  $produit=$_POST['produits'];
   $total=$_POST['total'];
 
-  $sqlQuery = "INSERT INTO `ventes`(`Nom`, `Description`, `Prix`, `Reference`, `Stock` ) 
-  VALUES (:nom,:descr,:prix,:ref,:stk)";
+
+  $sqlQuery = "INSERT INTO `ventes`(`Id_Caissier`, `Total` ) 
+  VALUES (:Caissier,:Total)";
   $insertproduit = $mysqlClient->prepare($sqlQuery);
   $insertproduit->execute([
-    'nom'=>$nom,
+    'Caissier'=>$_SESSION['user']['id'],
+    'Total'=>$total,
   ]);
+
+  //Jointure  
+  $sqlQuery = 
+  'SELECT ve.Id,
+  ve.Date,
+  ve.Total,
+  ca.Prenom
+  FROM ventes ve
+  JOIN caissier ca on ca.Id = ve.Id_Caissier ORDER BY ve.Id DESC;';
+  $SelectVentes=$mysqlClient->prepare($sqlQuery);
+  $SelectVentes->execute();
+  $Ventes=$SelectVentes->fetchAll();
+
+  $drvente=$Ventes[0]['Id'];
+  for ($i=0;$i<count($produit);$i++) {
+
+  $sqlQuery = "INSERT INTO `produit_vendu`(`Id_Produit`, `Quantite`, `Id_Vente` ) 
+    VALUES (:Id_Produit,:Quantite, :Id_Vente)";
+    $insertproduit = $mysqlClient->prepare($sqlQuery);
+    $insertproduit->execute([
+      'Id_Produit' =>$produit[$i]['Id'],
+      'Quantite'=>$produit[$i]['quantite'],
+      'Id_Vente'=>$drvente,
+    ]);
+  } 
 }
+
+
 
 
 
@@ -53,7 +71,7 @@ $Produits=$selectproduit->fetchAll();
   
 </head>
 <body>
- 
+
 <nav class="navbar">
   <div class="logo">
     <a href="index.php"><img src="./img/logo.png" alt="CaisseShop"></a>
@@ -142,6 +160,7 @@ $Produits=$selectproduit->fetchAll();
 
             <input type="hidden" name="produits[${index}][Id]" value="${caisse[index].Id}">
             <input type="hidden" name="produits[${index}][quantite]" value="${caisse[index].Quantite}">
+            <input type="hidden" name="total" value="${total}">
             
           </div>
         `;

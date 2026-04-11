@@ -12,12 +12,11 @@ require_once(__DIR__ . '/bdd.php');
 //Jointure  
 $sqlQuery = 
 'SELECT ve.Id,
+ca.Prenom,
 ve.Date,
-ve.Heure,
-ve.Total,
-ca.Prenom
+ve.Total
 FROM ventes ve
-JOIN caissier ca on ca.Id = ve.Id_Caissier;';
+JOIN caissier ca on ca.Id = ve.Id_Caissier ORDER BY Date DESC;';
 $SelectVentes=$mysqlClient->prepare($sqlQuery);
 $SelectVentes->execute();
 $Ventes=$SelectVentes->fetchAll();
@@ -36,7 +35,7 @@ $Ventes=$SelectVentes->fetchAll();
 <body>
  
   <div class="topbar">
-    <a href="index.php" class="back-link">
+    <a href="caisse.php" class="back-link">
       <-- Retour
     </a>
   </div>
@@ -51,122 +50,44 @@ $Ventes=$SelectVentes->fetchAll();
     </div>
  
     <div class="day-group">
-      <div class="day-label">26 mars 2026</div>
+      <!--<div class="day-label">26 mars 2026</div>!-->
       <div class="table-card">
         <table>
           <thead>
             <tr>
-              <th>Utilisateur</th>
-              <th>Heure</th>
-              <th>Nombre de produit</th>
+              <th>Caissier</th>
+              <th>Date</th>
               <th>Total</th>
               <th>Aperçu</th>
             </tr>
           </thead>
           <tbody>
+            
+            <?php
+            for ($i=0;$i<count($Ventes);$i++) {
+
+            ?>
             <tr>
               <td>
                 <div class="user-cell">
-                  <?php echo $Ventes[1]['Prenom'] ?>
+                  <?php echo $Ventes[$i]['Prenom'] ?>
                 </div>
               </td>
-              <td><span class="time-badge">13:11</span></td>
-              <td><span class="qty">5</span></td>
-              <td><span class="total">42,95 €</span></td>
+              <td><span class="time-badge"><?php echo $Ventes[$i]['Date'] ?></span></td>
+              <td><span class="total"><?php echo $Ventes[$i]['Total'] . " €"?></span></td>
               <td>
                 <form action="apercu.php" method="post">
                   <button type="submit" class="btn-voir">Voir</button>
                 <form>
               </td>
             </tr>
-            <tr>
-              <td>
-                <div class="user-cell">
-                  User1
-                </div>
-              </td>
-              <td><span class="time-badge">14:25</span></td>
-              <td><span class="qty">9</span></td>
-              <td><span class="total">79,90 €</span></td>
-              <td>
-                <form action="apercu.php" method="post">
-                  <button type="submit" class="btn-voir">Voir</button>
-                <form>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="user-cell">
-                  User2
-                </div>
-              </td>
-              <td><span class="time-badge">19:02</span></td>
-              <td><span class="qty">4</span></td>
-              <td><span class="total">23,25 €</span></td>
-              <td>
-                <form action="apercu.php" method="post">
-                  <button type="submit" class="btn-voir">Voir</button>
-                <form>
-              </td>
-            </tr>
+            <?php 
+            }?>
+            
           </tbody>
         </table>
       </div>
     </div>
- 
-    <!-- 25 mars 2026 -->
-    <div class="day-group">
-      <div class="day-label">25 mars 2026</div>
-      <div class="table-card">
-        <table>
-          <thead>
-            <tr>
-              <th>Utilisateur</th>
-              <th>Heure</th>
-              <th>Nombre de produit</th>
-              <th>Total</th>
-              <th>Aperçu</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="user-cell">
-                  User4
-                </div>
-              </td>
-              <td><span class="time-badge">08:56</span></td>
-              <td><span class="qty">11</span></td>
-              <td><span class="total">64,10 €</span></td>
-              <td><button class="btn-voir">Voir</button></td>
-            </tr>
-            <tr>
-              <td>
-                <div class="user-cell">
-                  User3
-                </div>
-              </td>
-              <td><span class="time-badge">10:25</span></td>
-              <td><span class="qty">3</span></td>
-              <td><span class="total">15,99 €</span></td>
-              <td><button class="btn-voir">Voir</button></td>
-            </tr>
-            <tr>
-              <td>
-                <div class="user-cell">
-                  User1
-                </div>
-              </td>
-              <td><span class="time-badge">18:34</span></td>
-              <td><span class="qty">2</span></td>
-              <td><span class="total">65,00 €</span></td>
-              <td><button class="btn-voir">Voir</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
- 
   </div>
 </body>
 </html>
