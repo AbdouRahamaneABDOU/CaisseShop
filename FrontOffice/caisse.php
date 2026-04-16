@@ -242,5 +242,42 @@ $Produits=$selectproduit->fetchAll();
 
 
     afficherProduits();
+
+    rProduit="";
+    document.addEventListener('keydown', (e) => {
+      if(e.key != "Enter"){
+        rProduit+=e.key;
+      }
+
+      if(e.key == "Enter"){
+        for (let index = 0; index < produits.length; index++){
+          if (convertirScan(rProduit) == produits[index].Reference) {
+            ajouterProduitDansCaisse(produits[index].Id);
+            rProduit="";
+          }else{
+            alert("Le code-barre n'existe pas !");
+            break;
+          }
+        }
+      }
+
+      
+    })
+
+    
+
+    function convertirScan(code){
+        return code.replaceAll("Shift", "") 
+        .replaceAll("à", "0")
+        .replaceAll("&", "1")
+        .replaceAll("é", "2")
+        .replaceAll("\"", "3")
+        .replaceAll("'", "4")
+        .replaceAll("(", "5")
+        .replaceAll("-", "6")
+        .replaceAll("è", "7")
+        .replaceAll("_", "8")
+        .replaceAll("ç", "9");
+    }
 </script>
 </html>

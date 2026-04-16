@@ -32,6 +32,8 @@ if (!isset($_SESSION['user'])) {
       <i class="fa-solid fa-arrow-right-from-bracket"></i>
       Se déconnecter
     </a>
+
+    <strong class="topbar-username"> <?php echo $_SESSION['user']['prenom'] ?> </strong>
   </div>
  
   <!-- CENTRE -->

@@ -37,7 +37,7 @@ require_once(__DIR__ . '/bdd.php');
     <div class="card detail-card">
  
       <div class="detail-image">
-        <img src="./img/farineble.png" alt="farine">
+        <img src="./img/food.jpg" alt="farine">
       </div>
  
       <div class="detail-info">
@@ -64,10 +64,8 @@ require_once(__DIR__ . '/bdd.php');
  
         <div class="detail-field barcode-wrapper">
           <strong>Code-Barres :</strong>
-          <div class="barcode-img">
-            <img src="./img/logo.png" alt="CODE">
-            <span class="bc-ref-label"><?php echo $_POST['R_pr'] ?></span>
-          </div>
+          <span ><?php echo $_POST['R_pr'] ?></span>
+          
         </div>
  
       </div>

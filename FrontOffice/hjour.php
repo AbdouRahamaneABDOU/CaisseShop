@@ -44,8 +44,8 @@ $Ventes=$SelectVentes->fetchAll();
     <h1>Historique des ventes</h1>
  
     <div class="tabs">
-      <a href="hjour.php" class="tab ">Par jour</a>
-      <a href="hsemaine.php" class="tab ">Par semaine</a>
+      <a href="hjour.php" class="tab ">Aujourd'hui</a>
+      <a href="hsemaine.php" class="tab ">Semaine</a>
       <a href="hperiode.php" class="tab">Période personnalisée</a>
     </div>
  

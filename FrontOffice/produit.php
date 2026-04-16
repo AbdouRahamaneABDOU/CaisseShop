@@ -75,18 +75,18 @@ isset($_POST['stock']) && !empty($_POST['stock'])){
         <div class="field">
             <label for="reference">Référence :</label>
             <div class="ref-wrapper">
-                <input type="text" name="reference" id="barcodeValue" placeholder="Ex : REF-123456" />
+                <input type="text" name="reference" id="barcodeValue" placeholder="Ex : REF-123" maxlength="7" />
             </div>
         </div>
     
         <div class="field">
             <label for="prix">Prix :</label>
-            <input type="number" name="prix" id="priceValue" />
+            <input type="number" step="0.01" name="prix" id="priceValue"/>
         </div>
     
         <div class="field">
             <label for="stock">Stock :</label>
-            <input type="number" name="stock" placeholder="0" min="0" step="1"/>
+            <input type="number" name="stock" placeholder="0" min="0" />
         </div>
 
         <div class="btn-row">
