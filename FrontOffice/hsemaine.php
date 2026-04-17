@@ -36,7 +36,7 @@ $Ventes=$SelectVentes->fetchAll();
  
   <div class="topbar">
     <a href="index.php" class="back-link">
-      <-- Retour
+      <-- Retour à la caisse
     </a>
   </div>
  
