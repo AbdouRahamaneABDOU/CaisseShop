@@ -225,10 +225,10 @@ $Produits=$selectproduit->fetchAll();
             productList.innerHTML = productList.innerHTML + `
              <div class="card" >
                 <div class="card-info" >
-                    <p><strong>Nom :</strong> ${produits[index].Nom}</p>
-                    <p><strong>Prix :</strong>${Number(produits[index].Prix)} €</p>
-                    <p><strong>Réference :</strong>${(produits[index].Reference)}</p>
-                    <p><strong>Stock :</strong>${Number(produits[index].Stock)}</p>
+                    <p><strong>Nom : </strong>${produits[index].Nom}</p>
+                    <p><strong>Prix : </strong>${Number(produits[index].Prix)} €</p>
+                    <p><strong>Réference : </strong>${(produits[index].Reference)}</p>
+                    <p><strong>Stock : </strong>${Number(produits[index].Stock)}</p>
                 </div>
                 <div class="card-footer">
                     <button class="btn-detail" type="button" onclick="ajouterProduitDansCaisse(${produits[index].Id})" >
